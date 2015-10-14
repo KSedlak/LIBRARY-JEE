@@ -9,11 +9,11 @@
 	<h:form>
 		<h:dataTable value="#{bookBean.books}" var="row">
 			<h:column>
-				<f:facet name="header">Description</f:facet>
+				<f:facet name="header">ID</f:facet>
 				#{row.id}
 			</h:column>
 			<h:column>
-				<f:facet name="header">Is done?</f:facet>
+				<f:facet name="header">TITLE</f:facet>
 				#{row.title}
 			</h:column>
 		</h:dataTable>
