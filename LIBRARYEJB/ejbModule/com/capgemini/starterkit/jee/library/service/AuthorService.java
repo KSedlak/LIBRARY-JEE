@@ -9,22 +9,19 @@ import javax.persistence.PersistenceContext;
 
 import com.capgemini.starterkit.jee.library.entities.BOOK;
 
-/**
- * Session Bean implementation class BookService
- */
 @Stateless
 @LocalBean
-public class BookService {
+public class AuthorService {
 
-    public BookService() {
+    public AuthorService() {
 
     }
     
     @PersistenceContext(unitName = "LIBRARY_PU")
 	EntityManager em;
 
-	public List<BOOK> findBOOKs() {
-		return em.createQuery("Select book From BOOK book", BOOK.class)
+	public List<BOOK> findAUTHORs() {
+		return em.createQuery("Select author From AUTHOR author", BOOK.class)
 				.getResultList();
 	}
 
