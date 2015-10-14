@@ -7,7 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.capgemini.starterkit.jee.library.entities.BOOK;
+import com.capgemini.starterkit.jee.library.entities.AUTHOR;
+
 
 @Stateless
 @LocalBean
@@ -20,8 +21,8 @@ public class AuthorService {
     @PersistenceContext(unitName = "LIBRARY_PU")
 	EntityManager em;
 
-	public List<BOOK> findAUTHORs() {
-		return em.createQuery("Select author From AUTHOR author", BOOK.class)
+	public List<AUTHOR> findAUTHORs() {
+		return em.createQuery("Select author From AUTHOR author", AUTHOR.class)
 				.getResultList();
 	}
 
