@@ -1,7 +1,13 @@
 package com.capgemini.starterkit.jee.library.service;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import com.capgemini.starterkit.jee.library.entities.BOOK;
 
 /**
  * Session Bean implementation class BookService
@@ -10,11 +16,16 @@ import javax.ejb.Stateless;
 @LocalBean
 public class BookService {
 
-    /**
-     * Default constructor. 
-     */
     public BookService() {
-        // TODO Auto-generated constructor stub
+
     }
+    
+    @PersistenceContext(unitName = "BooksPU")
+	EntityManager em;
+
+	public List<BOOK> findBOOKs() {
+		return em.createQuery("Select book From BOOK book", BOOK.class)
+				.getResultList();
+	}
 
 }
