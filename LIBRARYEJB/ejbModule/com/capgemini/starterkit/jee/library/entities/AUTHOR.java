@@ -74,5 +74,11 @@ public class AUTHOR implements Serializable {
 	public void setBooks(Set<BOOK> books) {
 		this.books = books;
 	}
-
+	public String getBookString() {
+		String res = "";
+		for (BOOK b : books) {
+			res = res + b.getTitle() + ", ";
+		}
+		return res.substring(0, res.length() - 2);
+	}
 }

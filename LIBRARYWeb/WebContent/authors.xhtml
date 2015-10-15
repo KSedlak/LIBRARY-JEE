@@ -5,26 +5,43 @@
 	xmlns:p="http://primefaces.org/ui" template="/layout/default.xhtml">
 
 	<ui:define name="content">
-		<p:dataTable var="book" value="#{bookBean.books}">
-			<p:column headerText="id">
-				<h:outputText value="#{book.id}" />
+<h:form style="width:20%; margin: auto;"  >      
+    <p:panel id="panel" header="Search" style="margin-bottom:10px;">
+
+ 
+       
+            <p:inputText id="txt1" value="" required="true" label="Text 1">
+
+            </p:inputText>
+</p:panel>
+  
+</h:form>
+	
+		<p:dataTable style="width:40%; margin: auto;" var="author" value="#{authorBean.authors}">
+			<p:column headerText="ID">
+				<h:outputText value="#{author.id}" />
 			</p:column>
-			<p:column headerText="title">
-				<h:outputText value="#{book.title}" />
+			<p:column headerText="firstName">
+				<h:outputText value="#{author.firstName}" />
+			</p:column>
+				<p:column headerText="lastName">
+				<h:outputText value="#{author.lastName}" />
+			</p:column>
+	
+		<p:column headerText="BOOK">
+
+
+            <h:outputText value="#{author.bookString}"/>
+
+
 			</p:column>
 			
-	
-						<p:column headerText="Authors">
-    <h:dataTable var="author" value="#{book.authors}">
-        <h:column>
-            <h:outputText value="#{author.firstName} #{author.lastName}"/>
-        </h:column>
-    </h:dataTable>
-
-			</p:column>
+								<p:column headerText="Control">
+						
+						
+						</p:column>
 		</p:dataTable>
 
-		<hr />
 
 
 

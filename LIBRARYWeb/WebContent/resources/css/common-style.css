@@ -3,5 +3,14 @@ html{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
     background:url("http://www.uglydogbooks.com/wp-content/uploads/2014/04/books.jpg") no-repeat center center fixed;
      }   
+     
+.ui-inputfield {
+    font-weight: normal;
+
+    outline: medium none;
+    width: 100%;
+    margin-left: 5%;
+}
