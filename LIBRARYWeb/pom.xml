@@ -5,6 +5,15 @@
 	<artifactId>LIBRARYWeb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	
+	<repositories>
+    <repository>
+        <id>prime-repo</id>
+        <name>PrimeFaces Maven Repository</name>
+        <url>http://repository.primefaces.org</url>
+        <layout>default</layout>
+    </repository>
+</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
@@ -15,11 +24,12 @@
 		
 	
 	
-				<dependency>
-  		<groupId>org.primefaces</groupId>
-  		<artifactId>primefaces</artifactId>
-  		<version>5.1</version>
-  	</dependency>
+<dependency>
+	<groupId>org.primefaces</groupId>
+	<artifactId>primefaces</artifactId>
+	<version>5.2</version>
+</dependency>
+
 		<dependency>
 			<groupId>com.capgemini.starterkit.jee.library</groupId>
 			<artifactId>LIBRARYEJB</artifactId>
@@ -31,7 +41,12 @@
 	<artifactId>infinispan-core</artifactId>
 	<version>5.0.1.FINAL</version>
 </dependency>
-		
+<dependency>  
+    <groupId>org.primefaces.themes</groupId>  
+    <artifactId>all-themes</artifactId>  
+    <version>1.0.10</version>  
+</dependency> 
+          
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>

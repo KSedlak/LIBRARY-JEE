@@ -4,11 +4,16 @@ package com.capgemini.starterkit.jee.library.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "AUTHOR")
@@ -23,6 +28,12 @@ public class AUTHOR implements Serializable {
 	@Column(name = "FIRSTNAME")
     private String firstName;
 
+	 @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "BOOK_AUTHOR",
+	            joinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)},
+	            inverseJoinColumns = {@JoinColumn(name = "BOOK_ID", nullable = false, updatable = false)})
+	    private Set<BOOK> books;
+	
 	@Column(name = "LASTNAME")
     private String lastName;
 
@@ -54,6 +65,14 @@ public class AUTHOR implements Serializable {
 
 	public void setId(int id) {
 		Id = id;
+	}
+
+	public Set<BOOK> getBooks() {
+		return books;
+	}
+
+	public void setBooks(Set<BOOK> books) {
+		this.books = books;
 	}
 
 }

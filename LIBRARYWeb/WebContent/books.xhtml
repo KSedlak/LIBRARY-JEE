@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/layout/default.xhtml">
+
+	<ui:define name="content">
+	<h:form>      
+    <p:panel id="panel" header="Search" style="margin-bottom:10px;">
+
+ 
+       
+            <p:inputText id="txt1" value="" required="true" label="Text 1">
+
+            </p:inputText>
+</p:panel>
+  
+</h:form>
+	
+		<p:dataTable var="book" value="#{bookBean.books}">
+			<p:column headerText="id">
+				<h:outputText value="#{book.id}" />
+			</p:column>
+			<p:column headerText="title">
+				<h:outputText value="#{book.title}" />
+			</p:column>
+			
+	
+						<p:column headerText="Authors">
+    <h:dataTable var="author" value="#{book.authors}">
+        <h:column>
+            <h:outputText value="#{author.firstName} #{author.lastName}"/>
+        </h:column>
+    </h:dataTable>
+
+			</p:column>
+		</p:dataTable>
+
+
+
+
+
+	</ui:define>
+</ui:composition>

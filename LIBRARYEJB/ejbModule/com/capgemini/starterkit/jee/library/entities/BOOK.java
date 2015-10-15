@@ -21,7 +21,7 @@ public class BOOK {
 	@javax.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	 @ManyToMany(fetch = FetchType.LAZY)
+	 @ManyToMany(fetch = FetchType.EAGER)
 	    @JoinTable(name = "BOOK_AUTHOR",
 	            joinColumns = {@JoinColumn(name = "BOOK_ID", nullable = false, updatable = false)},
 	            inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})
@@ -45,6 +45,14 @@ public class BOOK {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Set<AUTHOR> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(Set<AUTHOR> authors) {
+		this.authors = authors;
 	}
 
 	
