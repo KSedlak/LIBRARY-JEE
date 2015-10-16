@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -42,6 +43,13 @@ public class AUTHOR implements Serializable {
 		return firstName;
 	}
 
+	public AUTHOR(String firstName, String lastName) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		books=new HashSet<BOOK>();
+	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -49,6 +57,7 @@ public class AUTHOR implements Serializable {
 
 	public AUTHOR() {
 		super();
+		books=new HashSet<BOOK>();
 	}
 
 	public String getLastName() {
@@ -76,9 +85,14 @@ public class AUTHOR implements Serializable {
 	}
 	public String getBookString() {
 		String res = "";
+		
+		if(books.size()==0){
+			return res;
+		}
 		for (BOOK b : books) {
 			res = res + b.getTitle() + ", ";
 		}
+
 		return res.substring(0, res.length() - 2);
 	}
 }

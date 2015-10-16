@@ -95,7 +95,7 @@
                 </p:commandLink>
                 <p:spacer width="20" height="10"/>
    			<p:commandLink update=":form:editAuthorDialog" oncomplete="PF('editAuthorDialog').show()" value="Edit" process="@this">
-                <f:setPropertyActionListener value="#{author}" target="#{authorBean.seletedAuthor}" />
+                <f:setPropertyActionListener value="#{author}" target="#{authorBean.selectedAuthor}" />
             </p:commandLink>
            
              
@@ -169,10 +169,10 @@
 
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel value="First Name: *" for="fName"></h:outputLabel>
-            <p:inputText id="fName" value="#{authorBean.seletedAuthor.firstName}" required="true"/>
+            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true"/>
 
             <h:outputLabel value="Last Name: *" for="lName"></h:outputLabel>
-            <p:inputText id="lName" value="#{authorBean.seletedAuthor.lastName}" required="true"/>
+            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
  
             <p:commandButton id="btn_reset" value="Reset" type="reset"/>
 

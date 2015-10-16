@@ -1,48 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/layout/default.xhtml">
 
 	<ui:define name="content">
-<h:form style="width:20%; margin: auto;"  >      
-    <p:panel id="panel" header="Search" style="margin-bottom:10px;">
-
- 
-       
-            <p:inputText id="txt1" value="" required="true" label="Text 1">
-
-            </p:inputText>
-</p:panel>
-  
-</h:form>
-	
-		<p:dataTable style="width:40%; margin: auto;" var="author" value="#{authorBean.authors}">
-			<p:column headerText="ID">
+<h:form id="form">
+   <p:growl id="msgs" style="width:80%;"/>
+	<p:dataTable style="width:80%; margin: auto;" var="author" value="#{authorBean.authors}"
+		widgetVar="AuthorsTable"
+                 emptyMessage="No author found with given criteria" filteredValue="#{authorBean.filteredAuthors}">
+                 
+		 <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText style="font-size:30px;" value="Search:" ></h:outputText>
+                <p:inputText id="globalFilter" onkeyup="PF('AuthorsTable').filter()" style="width:50%;font-size:30px;" placeholder="" ></p:inputText>
+            </p:outputPanel>
+         
+        </f:facet>
+		
+			<p:column headerText="ID" style="width:5%;" filterBy="#{author.id}" filterStyle="display: none; visibility: hidden;" filterMatchMode="exact">
 				<h:outputText value="#{author.id}" />
 			</p:column>
-			<p:column headerText="firstName">
+			
+			<p:column style="width:auto;" headerText="firstName" filterBy="#{author.firstName}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
 				<h:outputText value="#{author.firstName}" />
+			
 			</p:column>
-				<p:column headerText="lastName">
+				<p:column headerText="lastName" filterBy="#{author.lastName}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
 				<h:outputText value="#{author.lastName}" />
 			</p:column>
 	
-		<p:column headerText="BOOK">
-
-
+		<p:column headerText="BOOK" style="width:auto;" filterBy="#{author.bookString}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
             <h:outputText value="#{author.bookString}"/>
-
-
 			</p:column>
 			
-								<p:column headerText="Control">
+			
+						<p:column headerText="Control">
 						
-						
+				<p:commandButton update=":form:editAuthorDialog" oncomplete="PF('editAuthorDialog').show()" value="Edit" process="@this">
+                <f:setPropertyActionListener value="#{author}" target="#{authorBean.selectedAuthor}" />
+            </p:commandButton>
 						</p:column>
 		</p:dataTable>
 
 
+
+
+
+
+
+
+<p:dialog header="Edytuj autora" id="editAuthorDialog" widgetVar="editAuthorDialog" modal="true" height="200" width="500">
+<h:form id="formEditAuthor">
+
+ 
+
+        <h:panelGrid columns="2" cellpadding="5" width="100%">
+            <h:outputLabel value="First Name: *" for="fName"></h:outputLabel>
+            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true"/>
+
+            <h:outputLabel value="Last Name: *" for="lName"></h:outputLabel>
+            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
+ 
+            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+    <p:commandButton value="Save" update=":form" actionListener="#{authorBean.saveEditedAuthor}" process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
+
+        </h:panelGrid>
+
+    </h:form>
+
+</p:dialog>
+
+
+
+
+</h:form>
 
 
 	</ui:define>

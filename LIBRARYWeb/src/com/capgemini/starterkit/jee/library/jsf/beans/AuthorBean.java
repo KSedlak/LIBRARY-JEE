@@ -2,42 +2,79 @@ package com.capgemini.starterkit.jee.library.jsf.beans;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import com.capgemini.starterkit.jee.library.entities.AUTHOR;
-
 import com.capgemini.starterkit.jee.library.service.AuthorService;
+
+
+
 
 import java.io.Serializable;
 
-@SessionScoped
+
+
+
+@ViewScoped
 @ManagedBean(name = "authorBean")
 public class AuthorBean implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1549445104379752961L;
+	private static final long serialVersionUID = -1493819788935830378L;
 	@EJB
 	AuthorService service;
 	
-	private AUTHOR seletedAuthor;
+	List<AUTHOR> filteredAuthors;
+	
+	List<AUTHOR> authors;
+	
+	AUTHOR selectedAuthor;
+	
+	@PostConstruct
+    public void init() {
+        authors = service.findAUTHORs();
+    }
+
+	public List<AUTHOR> getFilteredAuthors() {
+		return filteredAuthors;
+	}
+
+	public void setFilteredAuthors(List<AUTHOR> filteredAuthors) {
+		this.filteredAuthors = filteredAuthors;
+	}
 
 	public List<AUTHOR> getAuthors() {
-		return service.findAUTHORs();
+		return authors;
 	}
 
-	public AUTHOR getSeletedAuthor() {
-		return seletedAuthor;
+	public void setAuthors(List<AUTHOR> authors) {
+		this.authors = authors;
 	}
 
-	public void setSeletedAuthor(AUTHOR seletedAuthor) {
-		this.seletedAuthor = seletedAuthor;
+	public AUTHOR getSelectedAuthor() {
+		return selectedAuthor;
 	}
 
-
-
+	public void setSelectedAuthor(AUTHOR selectedAuthor) {
+		this.selectedAuthor = selectedAuthor;
+	}
+	
+	public void saveEditedAuthor(){
+		FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Saved " + selectedAuthor.getFirstName() + " " + selectedAuthor.getLastName()));
+		service.editAuthor(selectedAuthor);
+	}
+	
+	
+	
+	
 
 }

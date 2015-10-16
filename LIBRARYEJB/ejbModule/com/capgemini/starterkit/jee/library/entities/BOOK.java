@@ -1,5 +1,6 @@
 package com.capgemini.starterkit.jee.library.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -28,6 +29,17 @@ public class BOOK {
 	    private Set<AUTHOR> authors;
 
 	
+	public BOOK(String title) {
+		super();
+		this.title = title;
+		authors=new HashSet<AUTHOR>();
+	}
+
+	public BOOK() {
+		super();
+		authors=new HashSet<AUTHOR>();
+	}
+
 	@Column(name = "TITLE")
 	String title;
 
@@ -57,9 +69,13 @@ public class BOOK {
 	
 	public String getAuthorsString() {
 		String res = "";
+		if(authors.size()==0){
+			return res;
+		}
 		for (AUTHOR a : authors) {
 			res = res + a.getFirstName() + " " + a.getLastName() + ", ";
 		}
+	
 		return res.substring(0, res.length() - 2);
 	}
 	
