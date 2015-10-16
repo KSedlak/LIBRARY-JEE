@@ -7,6 +7,8 @@ html{
     background:url("http://www.uglydogbooks.com/wp-content/uploads/2014/04/books.jpg") no-repeat center center fixed;
      }   
      
+     
+
 .ui-inputfield {
     font-weight: normal;
 
@@ -14,3 +16,32 @@ html{
     width: 100%;
     margin-left: 5%;
 }
+.ui-corner-top{
+	font-size: 25px;
+}
+.ui-column-title{
+	font-size: 20px;
+}
+td{
+	font-size: 18px;
+	text-align: center;
+}
+.logo{
+text-shadow:1px 1px 1px rgba(133,96,24,1);
+font-weight:normal;
+font-style:italic;
+color:#FCC381;
+float:center;
+letter-spacing:8pt;
+word-spacing:6pt;
+font-size:86px;
+text-align:left;
+font-family:impact, sans-serif;
+line-height:1;
+margin:auto;
+
+}
+
+
+	
+	}

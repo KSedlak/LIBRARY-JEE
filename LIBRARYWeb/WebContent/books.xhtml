@@ -2,45 +2,190 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/layout/default.xhtml">
 
 	<ui:define name="content">
-	<h:form style="width:20%; margin: auto;"  >      
-    <p:panel id="panel" header="Search" style="margin-bottom:10px;">
 
- 
-       
-            <p:inputText id="txt1" value="" required="true" label="Text 1">
-
-            </p:inputText>
-</p:panel>
-  
-</h:form>
-	
-		<p:dataTable style="width:40%; margin: auto;" var="book" value="#{bookBean.books}">
-			<p:column headerText="ID">
+	<h:form id="form">
+		<p:dataTable style="width:60%; margin: auto;" var="book" value="#{bookBean.books}"
+		widgetVar="BooksTable"
+                 emptyMessage="No books found with given criteria" filteredValue="#{bookBean.filteredBooks}">
+                 
+		 <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText style="font-size:30px;" value="Search:" ></h:outputText>
+                <p:inputText id="globalFilter" onkeyup="PF('BooksTable').filter()" style="width:50%;font-size:30px;" placeholder="" ></p:inputText>
+              <p:commandButton  value="Add Book" type="button" onclick="PF('BookAddDialog').show();" style="margin-left:100px;font-size:25px;"  />
+            </p:outputPanel>
+         
+        </f:facet>
+        
+			<p:column  style="width:10%;"  headerText="Id" filterBy="#{book.id}" filterStyle="display: none; visibility: hidden;" filterMatchMode="exact">
 				<h:outputText value="#{book.id}" />
 			</p:column>
-			<p:column headerText="TITLE">
-				<h:outputText value="#{book.title}" />
+			<p:column   headerText="Title" filterBy="#{book.title}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
+				<h:outputText value="#{book.title}"  />
 			</p:column>
 			
 	
-						<p:column headerText="AUTHORS">
+						<p:column headerText="Authors" filterBy="#{book.authorsString}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
 
             <h:outputText value="#{book.authorsString}"/>
 
 			</p:column>
+					<p:column headerText="Control">					
+					
+   			<p:commandButton update=":form:BookEditDialog" oncomplete="PF('BookEditDialog').show()" value="Edit Book" process="@this">
+                <f:setPropertyActionListener value="#{book}" target="#{bookBean.selectedBOOK}" />
+            </p:commandButton>
+						
+			</p:column>
 			
-								<p:column headerText="Control">
-						
-						
-						</p:column>
 		</p:dataTable>
 
 
 
 
 
+
+
+
+
+
+
+
+
+<p:dialog id="BookEditDialog" header="Edycja Ksiazki" widgetVar="BookEditDialog" modal="true" height="300" width="500">
+
+  
+<h:form id="formBookEdit">
+    <p:growl id="msgs" />
+ 
+
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Title : *" for="bookTitle"></h:outputLabel>
+            <p:inputText id="bookTitle" value="#{bookBean.selectedBOOK.title}" required="true"/>
+
+ 
+            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+             <p:commandButton value="Add Author" type="button" onclick="PF('addAuthorDialog').show();" style="margin-left:10px;" />
+
+        </h:panelGrid>
+
+
+
+ <p:outputPanel id="AuthorsInEditDialog" >
+        <p:dataTable value="#{bookBean.selectedBOOK.authors}" var="author" id="AuthorsInEditDialogTable" emptyMessage="Book must have an author!">
+ 	 <f:facet name="header">
+ 	 <h:outputText value="Authors" style="font-size:20px;"/>
+ 	 </f:facet>>
+            <p:column headerText="Name">
+                <h:outputText value="#{author.firstName}" />
+            </p:column>
+ 
+            <p:column headerText="Last Name">
+    
+                  <h:outputText value="#{author.lastName}" />
+            </p:column>
+ 
+            <p:column headerText="Action">
+                <p:commandLink value="Remove" update=":form:formBookEdit:AuthorsInEditDialog" process=":form:formBookEdit:AuthorsInEditDialog">
+                    <p:collector value="#{author}" removeFrom="#{bookBean.selectedBOOK.authors}" unique="true"/>
+                </p:commandLink>
+                <p:spacer width="20" height="10"/>
+   			<p:commandLink update=":form:editAuthorDialog" oncomplete="PF('editAuthorDialog').show()" value="Edit" process="@this">
+                <f:setPropertyActionListener value="#{author}" target="#{authorBean.seletedAuthor}" />
+            </p:commandLink>
+           
+             
+            </p:column>
+ 
+        </p:dataTable>
+    </p:outputPanel>
+
+  <p:commandButton id="save" value="Save"  type="button" style="float: right; font-size:20px;"/>
+
+
+
+
+
+
+    </h:form>
+
+</p:dialog> 
+
+
+
+
+<p:dialog id="BookAddDialog" header="Dodaj ksiazke" widgetVar="BookAddDialog" modal="true" height="200" width="500">
+
+  
+<h:form >
+    <p:growl id="msgs" />
+ 
+
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Title : *" for="bookTitle"></h:outputLabel>
+            <p:inputText id="bookTitle" value="" required="true"/>
+
+ 
+            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+             <p:commandButton value="Add Author" type="button" onclick="PF('addAuthorDialog').show();" style="margin-left:10px;" />
+
+        </h:panelGrid>
+
+    </h:form>
+
+</p:dialog> 
+
+
+<p:dialog header="Dodaj autora" widgetVar="addAuthorDialog" modal="true" height="200" width="500">
+<h:form id="formAddAuthor">
+    <p:growl id="msgs" />
+ 
+
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="First Name: *" for="fName"></h:outputLabel>
+            <p:inputText id="fName" value="" required="true"/>
+
+            <h:outputLabel value="Last Name: *" for="lName"></h:outputLabel>
+            <p:inputText id="lName" value="" required="true"/>
+ 
+            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+
+        </h:panelGrid>
+
+    </h:form>
+
+</p:dialog>
+
+
+
+<p:dialog header="Edytuj autora" id="editAuthorDialog" widgetVar="editAuthorDialog" modal="true" height="200" width="500">
+<h:form id="formEditAuthor">
+    <p:growl id="msgs" />
+ 
+
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="First Name: *" for="fName"></h:outputLabel>
+            <p:inputText id="fName" value="#{authorBean.seletedAuthor.firstName}" required="true"/>
+
+            <h:outputLabel value="Last Name: *" for="lName"></h:outputLabel>
+            <p:inputText id="lName" value="#{authorBean.seletedAuthor.lastName}" required="true"/>
+ 
+            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+
+        </h:panelGrid>
+
+    </h:form>
+
+</p:dialog>
+
+
+
+
+
+</h:form>
 	</ui:define>
 </ui:composition>
