@@ -10,8 +10,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.validator.internal.util.privilegedactions.NewSchema;
+
 import com.capgemini.starterkit.jee.library.entities.AUTHOR;
 import com.capgemini.starterkit.jee.library.service.AuthorService;
+
 
 
 
@@ -67,10 +70,16 @@ public class AuthorBean implements Serializable {
 		this.selectedAuthor = selectedAuthor;
 	}
 	
+	
+	public void createNewAuthor(){
+		selectedAuthor=new AUTHOR();
+	}
+	
 	public void saveEditedAuthor(){
 		FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Saved " + selectedAuthor.getFirstName() + " " + selectedAuthor.getLastName()));
 		service.editAuthor(selectedAuthor);
+		selectedAuthor=new AUTHOR();
 	}
 	
 	

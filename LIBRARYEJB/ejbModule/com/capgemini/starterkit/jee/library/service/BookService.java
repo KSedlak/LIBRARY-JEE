@@ -36,8 +36,9 @@ public class BookService {
 	}
 
 	public BOOK removeBOOK(BOOK b) {
-		em.remove(b);
-		return b;
+		BOOK fromDB = em.find(BOOK.class, b.getId());
+		em.remove(fromDB);
+		return fromDB;
 	}
 
 	public BOOK editBOOK(BOOK b) {

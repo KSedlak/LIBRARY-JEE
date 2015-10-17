@@ -3,8 +3,10 @@ html{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
-    background:url("http://www.uglydogbooks.com/wp-content/uploads/2014/04/books.jpg") no-repeat center center fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+    background:url("http://i.imgur.com/mxfHgnW.jpg");
      }   
      
      

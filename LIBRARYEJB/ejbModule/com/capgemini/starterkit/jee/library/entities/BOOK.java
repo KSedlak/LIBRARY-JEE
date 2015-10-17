@@ -3,6 +3,7 @@ package com.capgemini.starterkit.jee.library.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,7 @@ public class BOOK {
 	@javax.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	 @ManyToMany(fetch = FetchType.EAGER)
+	 @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	    @JoinTable(name = "BOOK_AUTHOR",
 	            joinColumns = {@JoinColumn(name = "BOOK_ID", nullable = false, updatable = false)},
 	            inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})

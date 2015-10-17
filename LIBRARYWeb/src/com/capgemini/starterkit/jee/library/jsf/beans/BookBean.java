@@ -5,8 +5,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import com.capgemini.starterkit.jee.library.entities.AUTHOR;
 import com.capgemini.starterkit.jee.library.entities.BOOK;
@@ -37,6 +39,7 @@ public class BookBean implements Serializable {
 	@PostConstruct
     public void init() {
         books = service.findBOOKs();
+        selectedBOOK=new BOOK();
     }
 	public List<BOOK> getBooks() {
 		return books;
@@ -50,6 +53,9 @@ public class BookBean implements Serializable {
 		return filteredBooks;
 	}
 
+	public void createNewBook(){
+		selectedBOOK=new BOOK();
+	}
 	public void setFilteredBooks(List<BOOK> filteredBooks) {
 		this.filteredBooks = filteredBooks;
 	}
@@ -60,7 +66,27 @@ public class BookBean implements Serializable {
 		this.selectedBOOK = selectedBOOK;
 	}
 	
+	public void saveEditeBOOK(){
+		FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Saved " +selectedBOOK.getTitle()));
+		service.editBOOK(selectedBOOK);
+		selectedBOOK=new BOOK();
+	}
+	
+	public void removeSelectedBook(BOOK book){
+		
+		service.removeBOOK(book);
+		
+	}
 	
 	
+	
+	
+	public void saveNewBook(){
+		FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Saved " +selectedBOOK.getTitle()));
+		service.addBOOK(selectedBOOK);
+		selectedBOOK=new BOOK();
+	}
 
 }

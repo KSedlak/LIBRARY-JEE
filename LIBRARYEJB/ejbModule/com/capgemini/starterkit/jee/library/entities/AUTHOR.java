@@ -2,6 +2,7 @@ package com.capgemini.starterkit.jee.library.entities;
 
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class AUTHOR implements Serializable {
 	@Column(name = "FIRSTNAME")
     private String firstName;
 
-	 @ManyToMany(fetch = FetchType.EAGER)
+	 @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	    @JoinTable(name = "BOOK_AUTHOR",
 	            joinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)},
 	            inverseJoinColumns = {@JoinColumn(name = "BOOK_ID", nullable = false, updatable = false)})

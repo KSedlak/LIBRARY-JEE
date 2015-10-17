@@ -10,11 +10,11 @@
    <p:growl id="msgs" style="width:80%;"/>
 	<p:dataTable style="width:80%; margin: auto;" var="author" value="#{authorBean.authors}"
 		widgetVar="AuthorsTable"
-                 emptyMessage="No author found with given criteria" filteredValue="#{authorBean.filteredAuthors}">
+                 emptyMessage="Brak wynikow wyszukiwania" filteredValue="#{authorBean.filteredAuthors}">
                  
 		 <f:facet name="header">
             <p:outputPanel>
-                <h:outputText style="font-size:30px;" value="Search:" ></h:outputText>
+                <h:outputText style="font-size:30px;" value="Szukaj:" ></h:outputText>
                 <p:inputText id="globalFilter" onkeyup="PF('AuthorsTable').filter()" style="width:50%;font-size:30px;" placeholder="" ></p:inputText>
             </p:outputPanel>
          
@@ -24,22 +24,22 @@
 				<h:outputText value="#{author.id}" />
 			</p:column>
 			
-			<p:column style="width:auto;" headerText="firstName" filterBy="#{author.firstName}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
+			<p:column style="width:auto;" headerText="Imie" filterBy="#{author.firstName}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
 				<h:outputText value="#{author.firstName}" />
 			
 			</p:column>
-				<p:column headerText="lastName" filterBy="#{author.lastName}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
+				<p:column headerText="Nazwisko" filterBy="#{author.lastName}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
 				<h:outputText value="#{author.lastName}" />
 			</p:column>
 	
-		<p:column headerText="BOOK" style="width:auto;" filterBy="#{author.bookString}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
+		<p:column headerText="Ksiazki" style="width:auto;" filterBy="#{author.bookString}" filterStyle="display: none; visibility: hidden;" filterMatchMode="contains">
             <h:outputText value="#{author.bookString}"/>
 			</p:column>
 			
 			
-						<p:column headerText="Control">
+						<p:column headerText="">
 						
-				<p:commandButton update=":form:editAuthorDialog" oncomplete="PF('editAuthorDialog').show()" value="Edit" process="@this">
+				<p:commandButton update=":form:editAuthorDialog" oncomplete="PF('editAuthorDialog').show()" value="Edytuj" process="@this">
                 <f:setPropertyActionListener value="#{author}" target="#{authorBean.selectedAuthor}" />
             </p:commandButton>
 						</p:column>
@@ -58,14 +58,14 @@
  
 
         <h:panelGrid columns="2" cellpadding="5" width="100%">
-            <h:outputLabel value="First Name: *" for="fName"></h:outputLabel>
+            <h:outputLabel value="Imie: *" for="fName"></h:outputLabel>
             <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true"/>
 
-            <h:outputLabel value="Last Name: *" for="lName"></h:outputLabel>
+            <h:outputLabel value="Nazwisko: *" for="lName"></h:outputLabel>
             <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
  
             <p:commandButton id="btn_reset" value="Reset" type="reset"/>
-    <p:commandButton value="Save" update=":form" actionListener="#{authorBean.saveEditedAuthor}" process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
+    <p:commandButton value="Zapisz" update=":form" actionListener="#{authorBean.saveEditedAuthor}" process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
 
         </h:panelGrid>
 
