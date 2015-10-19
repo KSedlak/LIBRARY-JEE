@@ -35,6 +35,7 @@ public class BookBean implements Serializable {
 	@PostConstruct
     public void init() {
         books = service.findBOOKs();
+        filteredBooks=service.findBOOKs();
         selectedBOOK=new BOOK();
     }
 	public List<BOOK> getBooks() {
@@ -70,11 +71,17 @@ public class BookBean implements Serializable {
 	}
 	
 	public void removeSelectedBook(BOOK book){
-		
+		books.remove(book);
 		service.removeBOOK(book);
 		
 	}
 	
+	public void reload(){
+		books.clear();
+		filteredBooks.clear();
+		books.addAll(service.findBOOKs());
+		filteredBooks.addAll(service.findBOOKs());
+	}
 	
 	
 	
@@ -82,6 +89,7 @@ public class BookBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Saved " +selectedBOOK.getTitle()));
 		service.addBOOK(selectedBOOK);
+		books.add(selectedBOOK);
 		selectedBOOK=new BOOK();
 	}
 
