@@ -192,12 +192,21 @@ onShow="#{bookBean.createNewBook()}">
 
 <p:dialog id="addAuthorDialog" modal="true" dynamic="true" resizable="false" header="Dodaj autora" widgetVar="addAuthorDialog" height="150" width="350">
 <h:form id="formAddAuthor">
-        <h:panelGrid columns="2" cellpadding="5" width="100%">
+        <h:panelGrid columns="3" cellpadding="5" width="100%">
             <h:outputLabel value="Imie: *" for="fName"></h:outputLabel>
-            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true"/>
+            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true">
+                          <f:validateLength minimum="2" />
+                <p:ajax update="msgFname" event="keyup" />
+            </p:inputText>
+            <p:message for="fName" id="msgFname" display="icon"  />
 
             <h:outputLabel value="Nazwisko: *" for="lName"></h:outputLabel>
-            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
+            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true">
+              <f:validateLength minimum="2" />
+                <p:ajax update="msgLname" event="keyup" />
+            </p:inputText>
+            <p:message for="lName" id="msgLname" display="icon"  />
+            
 </h:panelGrid>
 <p:commandButton value="Zapisz" update=":form:formBookEdit:AuthorsInEditDialog :form:formBookAdd:AuthorsInAddDialog :form:formAddAuthor" process=":form:formAddAuthor" 
         oncomplete="PF('addAuthorDialog').hide()" action="#{authorBean.createNewAuthor()}" styleClass="buttonRight">
@@ -214,13 +223,20 @@ onShow="#{bookBean.createNewBook()}">
    
  
 
-        <h:panelGrid columns="2" cellpadding="5" width="100%">
+                <h:panelGrid columns="3" cellpadding="5" width="100%">
             <h:outputLabel value="Imie: *" for="fName"></h:outputLabel>
-            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true"/>
+            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true">
+                          <f:validateLength minimum="2" />
+                <p:ajax update="msgFname" event="keyup" />
+            </p:inputText>
+            <p:message for="fName" id="msgFname" display="icon"  />
 
             <h:outputLabel value="Nazwisko: *" for="lName"></h:outputLabel>
-            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
- 
+            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true">
+              <f:validateLength minimum="2" />
+                <p:ajax update="msgLname" event="keyup" />
+            </p:inputText>
+            <p:message for="lName" id="msgLname" display="icon"  />
             <p:commandButton id="btn_reset" value="Kasuj zmiany" type="reset" styleClass="buttonLeft"/>
  <p:commandButton value="Zapisz"  update=":form:formBookEdit:AuthorsInEditDialog :form:formBookAdd:AuthorsInAddDialog" actionListener="#{authorBean.saveEditedAuthor}"
    process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()" styleClass="buttonRight"/>

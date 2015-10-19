@@ -57,12 +57,20 @@
 
  
 
-        <h:panelGrid columns="2" cellpadding="5" width="100%">
+              <h:panelGrid columns="3" cellpadding="5" width="100%">
             <h:outputLabel value="Imie: *" for="fName"></h:outputLabel>
-            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true"/>
+            <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true">
+                          <f:validateLength minimum="2" />
+                <p:ajax update="msgFname" event="keyup" />
+            </p:inputText>
+            <p:message for="fName" id="msgFname" display="icon"  />
 
             <h:outputLabel value="Nazwisko: *" for="lName"></h:outputLabel>
-            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
+            <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true">
+              <f:validateLength minimum="2" />
+                <p:ajax update="msgLname" event="keyup" />
+            </p:inputText>
+            <p:message for="lName" id="msgLname" display="icon"  />
  
             <p:commandButton id="btn_reset" value="Reset" type="reset"/>
     <p:commandButton value="Zapisz" update=":form" actionListener="#{authorBean.saveEditedAuthor}" process="@form" styleClass="buttonRight" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
