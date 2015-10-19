@@ -17,7 +17,7 @@
             <p:outputPanel>
                 <h:outputText style="font-size:30px;" value="Szukaj:" ></h:outputText>
                 <p:inputText id="globalFilter" onkeyup="PF('BooksTable').filter()" style="width:50%;font-size:30px;" placeholder="" ></p:inputText>
-              <p:commandButton  value="Dodaj Ksiazke" type="button" onclick="PF('BookAddDialog').show();" action="#{bookBean.createNewBook()}" style="margin-left:100px;font-size:25px;" update="BookAddDialog" />
+              <p:commandButton  value="Dodaj Ksiazke" type="button" onclick="#{bookBean.createNewBook()};PF('BookAddDialog').show();"  style="margin-left:100px;font-size:25px;" />
             </p:outputPanel>
          
         </f:facet>
@@ -58,9 +58,14 @@
 
  
 
-        <h:panelGrid columns="2" cellpadding="5" style="width:100%">
+        <h:panelGrid columns="3" cellpadding="5" style="width:100%">
             <h:outputLabel value="Tytul : *" for="bookTitle"></h:outputLabel>
-            <p:inputText id="bookTitle" value="#{bookBean.selectedBOOK.title}" required="true"/>
+            <p:inputText id="bookTitle" value="#{bookBean.selectedBOOK.title}" required="true">
+              <f:validateLength minimum="2" />
+                <p:ajax update="msgTitle :form:formBookEdit:AuthorsInEditDialog" event="keyup" />
+            </p:inputText>
+            <p:message for="bookTitle" id="msgTitle" display="icon"  />
+         
 
  
             <p:commandButton id="btn_reset" value="Kasuj zmiany" type="reset" styleClass="buttonLeft"/>
@@ -76,7 +81,9 @@
  	 <h:outputText value="Autorstwa: " style="font-size:20px;"/>
  	 </f:facet>>
             <p:column headerText="Imie">
-                <h:outputText value="#{author.firstName}" />
+                <h:outputText value="#{author.firstName}" >
+        
+                </h:outputText>
             </p:column>
  
             <p:column headerText="Nazwisko">
@@ -97,10 +104,14 @@
             </p:column>
  
         </p:dataTable>
+        
+        <p:commandButton value="Zapisz" update=":form" actionListener="#{bookBean.saveEditeBOOK()}"
+                 rendered="#{(not empty bookBean.selectedBOOK.authors) and (bookBean.selectedBOOK.title.length()>1)}"
+         process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()" 
+style="float:right;font-size:15px; margin-top:20px;"/>
+        
     </p:outputPanel>
 
-<p:commandButton value="Zapisz" update=":form" actionListener="#{bookBean.saveEditeBOOK()}" process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()" 
-style="float:right;font-size:15px; margin-top:20px;"/>
 
 
 
@@ -122,14 +133,16 @@ onShow="#{bookBean.createNewBook()}">
 
  
 
-        <h:panelGrid columns="2" cellpadding="5" style="width:100%">
+        <h:panelGrid columns="3" cellpadding="5" style="width:100%">
             <h:outputLabel value="Tytul : *" for="bookTitle"></h:outputLabel>
-            <p:inputText id="bookTitle" value="#{bookBean.selectedBOOK.title}" required="true"/>
+            <p:inputText id="bookTitle" value="#{bookBean.selectedBOOK.title}" required="true">
 
- 
+               <f:validateLength minimum="2" />
+                <p:ajax update="msgTitle :form:formBookAdd:AuthorsInAddDialog" event="keyup" />
+            </p:inputText>
+            <p:message for="bookTitle" id="msgTitle" display="icon"  />
             <p:commandButton id="btn_reset" value="Kasuj zmiany" type="reset" styleClass="buttonLeft"/>
-             <p:commandButton value="Dodaj autora" type="button" onclick="PF('addAuthorDialog').show();"  styleClass="buttonRight"/>
-
+            <p:commandButton value="Dodaj autora" type="button" onclick="PF('addAuthorDialog').show();" styleClass="buttonRight"/>
         </h:panelGrid>
 
 
@@ -161,7 +174,8 @@ onShow="#{bookBean.createNewBook()}">
             </p:column>
  
         </p:dataTable>
-           <p:commandButton id="saveBookButton" value="Zapisz" update=":form " process=":form:formBookAdd" oncomplete="PF('BookAddDialog').hide()"   rendered="#{not empty bookBean.selectedBOOK.authors}" actionListener="#{bookBean.saveNewBook()}"
+           <p:commandButton id="saveBookButton" value="Zapisz" update=":form " process=":form:formBookAdd" oncomplete="PF('BookAddDialog').hide()"  
+            rendered="#{(not empty bookBean.selectedBOOK.authors) and (bookBean.selectedBOOK.title.length()>1)}" actionListener="#{bookBean.saveNewBook()}"
     style="float:right;font-size:15px; margin-top:20px;" ajax="true"/>
     </p:outputPanel>
 
@@ -178,9 +192,6 @@ onShow="#{bookBean.createNewBook()}">
 
 <p:dialog id="addAuthorDialog" modal="true" dynamic="true" resizable="false" header="Dodaj autora" widgetVar="addAuthorDialog" height="150" width="350">
 <h:form id="formAddAuthor">
-  
- 
-
         <h:panelGrid columns="2" cellpadding="5" width="100%">
             <h:outputLabel value="Imie: *" for="fName"></h:outputLabel>
             <p:inputText id="fName" value="#{authorBean.selectedAuthor.firstName}" required="true"/>
@@ -188,7 +199,7 @@ onShow="#{bookBean.createNewBook()}">
             <h:outputLabel value="Nazwisko: *" for="lName"></h:outputLabel>
             <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
 </h:panelGrid>
-<p:commandButton value="Zapisz" update=":form:formBookEdit:AuthorsInEditDialog :form:formBookAdd:AuthorsInAddDialog" process=":form:formAddAuthor" 
+<p:commandButton value="Zapisz" update=":form:formBookEdit:AuthorsInEditDialog :form:formBookAdd:AuthorsInAddDialog :form:formAddAuthor" process=":form:formAddAuthor" 
         oncomplete="PF('addAuthorDialog').hide()" action="#{authorBean.createNewAuthor()}" styleClass="buttonRight">
                     <p:collector value="#{authorBean.selectedAuthor}" addTo="#{bookBean.selectedBOOK.authors}" unique="true"/>
          </p:commandButton>
