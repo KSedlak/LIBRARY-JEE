@@ -1,24 +1,14 @@
 package com.capgemini.starterkit.jee.library.jsf.beans;
 
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
-import org.hibernate.validator.internal.util.privilegedactions.NewSchema;
-
 import com.capgemini.starterkit.jee.library.entities.AUTHOR;
 import com.capgemini.starterkit.jee.library.service.AuthorService;
-
-
-
-
-
 import java.io.Serializable;
 
 
@@ -44,6 +34,7 @@ public class AuthorBean implements Serializable {
 	@PostConstruct
     public void init() {
         authors = service.findAUTHORs();
+        selectedAuthor=new AUTHOR();
     }
 
 	public List<AUTHOR> getFilteredAuthors() {
@@ -77,7 +68,7 @@ public class AuthorBean implements Serializable {
 	
 	public void saveEditedAuthor(){
 		FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Saved " + selectedAuthor.getFirstName() + " " + selectedAuthor.getLastName()));
+                new FacesMessage("Pomyslnie zapisano " + selectedAuthor.getFirstName() + " " + selectedAuthor.getLastName()));
 		service.editAuthor(selectedAuthor);
 		selectedAuthor=new AUTHOR();
 	}

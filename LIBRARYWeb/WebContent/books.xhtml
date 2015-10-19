@@ -17,7 +17,7 @@
             <p:outputPanel>
                 <h:outputText style="font-size:30px;" value="Szukaj:" ></h:outputText>
                 <p:inputText id="globalFilter" onkeyup="PF('BooksTable').filter()" style="width:50%;font-size:30px;" placeholder="" ></p:inputText>
-              <p:commandButton  value="Dodaj Ksiazke" type="button" onclick="PF('BookAddDialog').show();" style="margin-left:100px;font-size:25px;"  />
+              <p:commandButton  value="Dodaj Ksiazke" type="button" onclick="PF('BookAddDialog').show();" action="#{bookBean.createNewBook()}" style="margin-left:100px;font-size:25px;" update="BookAddDialog" />
             </p:outputPanel>
          
         </f:facet>
@@ -189,7 +189,7 @@
             <h:outputLabel value="Nazwisko: *" for="lName"></h:outputLabel>
             <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
  
-        <p:commandButton value="Zapisz" update=":form:formBookAdd:AuthorsInAddDialog" process=":form:formAddAuthor" onstart="#{authorBean.createNewAuthor()}" oncomplete="PF('addAuthorDialog').hide()">
+        <p:commandButton value="Zapisz" update=":form:formBookEdit:AuthorsInEditDialog :form:formBookAdd:AuthorsInAddDialog" process=":form:formAddAuthor" oncomplete="PF('addAuthorDialog').hide()" action="#{authorBean.createNewAuthor()}">
                     <p:collector value="#{authorBean.selectedAuthor}" addTo="#{bookBean.selectedBOOK.authors}" unique="true"/>
          </p:commandButton>
 </h:panelGrid>
@@ -214,7 +214,7 @@
             <p:commandButton id="btn_reset" value="Kasuj zmiany" type="reset"/>
 
         </h:panelGrid>
-  <p:commandButton value="Zapisz"  update=":form:formBookEdit:AuthorsInEditDialog" actionListener="#{authorBean.saveEditedAuthor}" process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
+  <p:commandButton value="Zapisz"  update=":form:formBookEdit:AuthorsInEditDialog :form:formBookAdd:AuthorsInAddDialog" actionListener="#{authorBean.saveEditedAuthor}" process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
     </h:form>
 
 </p:dialog>

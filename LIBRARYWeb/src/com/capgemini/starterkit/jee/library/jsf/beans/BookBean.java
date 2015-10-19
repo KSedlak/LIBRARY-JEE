@@ -4,16 +4,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
-import com.capgemini.starterkit.jee.library.entities.AUTHOR;
 import com.capgemini.starterkit.jee.library.entities.BOOK;
 import com.capgemini.starterkit.jee.library.service.BookService;
-
 import java.io.Serializable;
 
 
@@ -68,7 +64,7 @@ public class BookBean implements Serializable {
 	
 	public void saveEditeBOOK(){
 		FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Saved " +selectedBOOK.getTitle()));
+                new FacesMessage("Pomyslnie zapisano " +selectedBOOK.getTitle()));
 		service.editBOOK(selectedBOOK);
 		selectedBOOK=new BOOK();
 	}
