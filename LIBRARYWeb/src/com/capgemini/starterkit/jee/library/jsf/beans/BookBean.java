@@ -72,6 +72,7 @@ public class BookBean implements Serializable {
 	
 	public void removeSelectedBook(BOOK book){
 		books.remove(book);
+		filteredBooks.remove(book);
 		service.removeBOOK(book);
 		
 	}
@@ -90,6 +91,7 @@ public class BookBean implements Serializable {
                 new FacesMessage("Saved " +selectedBOOK.getTitle()));
 		service.addBOOK(selectedBOOK);
 		books.add(selectedBOOK);
+		filteredBooks.add(selectedBOOK);
 		selectedBOOK=new BOOK();
 	}
 

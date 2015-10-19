@@ -65,7 +65,7 @@
             <p:inputText id="lName" value="#{authorBean.selectedAuthor.lastName}" required="true"/>
  
             <p:commandButton id="btn_reset" value="Reset" type="reset"/>
-    <p:commandButton value="Zapisz" update=":form" actionListener="#{authorBean.saveEditedAuthor}" process="@form" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
+    <p:commandButton value="Zapisz" update=":form" actionListener="#{authorBean.saveEditedAuthor}" process="@form" styleClass="buttonRight" icon="ui-icon-check" oncomplete="PF('editAuthorDialog').hide()"/>
 
         </h:panelGrid>
 
