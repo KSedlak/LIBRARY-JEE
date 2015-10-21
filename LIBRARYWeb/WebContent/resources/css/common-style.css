@@ -36,10 +36,12 @@ color:#FCC381;
 letter-spacing:8pt;
 word-spacing:6pt;
 font-size:86px;
-text-align:center;
 font-family:impact, sans-serif;
 line-height:1;
-margin:auto;
+  display: block;
+   margin-left: auto;
+    margin-right: auto;
+}
 
 }
 

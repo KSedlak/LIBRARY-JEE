@@ -40,7 +40,15 @@
    			<p:commandButton update=":form:BookEditDialog" oncomplete="PF('BookEditDialog').show()" value="Edytuj" process="@this">
                 <f:setPropertyActionListener value="#{book}" target="#{bookBean.selectedBOOK}" />
             </p:commandButton>						
-							<p:commandButton update="@form:BooksTable @form:msgs" action="#{bookBean.removeSelectedBook(book)}" value="Kasuj" ajax="true" process="@this"/>			
+							<p:commandButton update="@form:BooksTable @form:msgs" action="#{bookBean.removeSelectedBook(book)}" value="Kasuj" ajax="true" process="@this">
+							 <p:confirm header="Potwierdzenie" message="Na pewno chcesz usunac ksiazke z bazy?" icon="ui-icon-alert" />
+							</p:commandButton>			
+							    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="font-size:20px;">
+							    <h:panelGrid columns="2" cellpadding="5" style="width:100%">
+        <p:commandButton value="Tak" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"  />
+        <p:commandButton value="Nie" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </h:panelGrid>
+    </p:confirmDialog>
 			</p:column>
 			
 		</p:dataTable>
